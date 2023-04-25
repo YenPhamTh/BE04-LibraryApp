@@ -100,82 +100,103 @@ public class LibraryApp {
 		hong.setTel("0987123456");
 
 		// Book stt: book-location-customer
-		BookStatus sttHarryCookinHanoi1 = new BookStatus();
-		sttHarryCookinHanoi1.bookInLocation = harryCookInHanoi;
-		sttHarryCookinHanoi1.customer = yen;
-		sttHarryCookinHanoi1.borrowDate = "20/4/2023";
+		BookStatus stt1 = new BookStatus();
+		stt1.id = 1;
+		stt1.book = harryCook;
+		stt1.location = hanoi;
+		stt1.customer = yen;
+		stt1.borrowDate = "20/4/2023";
 
-		BookStatus sttHarryCookinHanoi2 = new BookStatus();
-		sttHarryCookinHanoi2.bookInLocation = harryCookInHanoi;
-		sttHarryCookinHanoi2.customer = hoa;
-		sttHarryCookinHanoi2.borrowDate = "25/3/2023";
-		sttHarryCookinHanoi2.returnDate = "23/4/2023";
+		BookStatus stt2 = new BookStatus();
+		stt2.id = 2;
+		stt2.book = harryCook;
+		stt2.location = hanoi;
+		stt2.customer = hoa;
+		stt2.borrowDate = "25/3/2023";
+		stt2.returnDate = "23/4/2023";
 
-		BookStatus sttHarryCookinHcm1 = new BookStatus();
-		sttHarryCookinHcm1.bookInLocation = harryCookInHcm;
-		sttHarryCookinHcm1.customer = hong;
-		sttHarryCookinHcm1.borrowDate = "22/4/2023";
+		BookStatus stt3 = new BookStatus();
+		stt3.id = 3;
+		stt3.book = harryCook;
+		stt3.location = hcm;
+		stt3.customer = hong;
+		stt3.borrowDate = "22/4/2023";
 
-		BookStatus sttTheCatinHanoi1 = new BookStatus();
-		sttTheCatinHanoi1.bookInLocation = theCatInHanoi;
-		sttTheCatinHanoi1.customer = yen;
-		sttTheCatinHanoi1.borrowDate = "25/2/2023";
+		BookStatus stt4 = new BookStatus();
+		stt4.id = 4;
+		stt4.book = theCat;
+		stt4.location = hanoi;
+		stt4.customer = yen;
+		stt4.borrowDate = "25/2/2023";
 
-		BookStatus sttTheCatinHcm1 = new BookStatus();
-		sttTheCatinHcm1.bookInLocation = theCatInHcm;
-		sttTheCatinHcm1.customer = hoa;
-		sttTheCatinHcm1.borrowDate = "01/3/2023";
-		sttTheCatinHcm1.returnDate = "09/4/2023";
+		BookStatus stt5 = new BookStatus();
+		stt5.id = 5;
+		stt5.book = theCat;
+		stt5.location = hcm;
+		stt5.customer = hoa;
+		stt5.borrowDate = "01/3/2023";
+		stt5.returnDate = "09/4/2023";
 
-		BookStatus sttTheCatinHcm2 = new BookStatus();
-		sttTheCatinHcm2.bookInLocation = theCatInHcm;
-		sttTheCatinHcm2.customer = hong;
-		sttTheCatinHcm2.borrowDate = "10/4/2023";
-		sttTheCatinHcm2.returnDate = "15/4/2023";
+		BookStatus stt6 = new BookStatus();
+		stt6.id = 6;
+		stt6.book = theCat;
+		stt6.location = hcm;
+		stt6.customer = hong;
+		stt6.borrowDate = "10/4/2023";
+		stt6.returnDate = "15/4/2023";
 
-		BookStatus[] bookstts = { sttHarryCookinHanoi1, sttHarryCookinHanoi2, sttHarryCookinHcm1, sttTheCatinHanoi1,
-				sttTheCatinHcm1, sttTheCatinHcm2 };
+		BookStatus[] bookstts = { stt1, stt2, stt3, stt4, stt5, stt6 };
 
-		// Print borrow list
-		System.out.println("Books borrowed list:");
+		printBorrowList(bookstts);
+		printBorrowReturnList(bookstts, stockInLocations);
+	}
+
+	// Print borrow list
+	public static void printBorrowList(BookStatus[] bookstts) {
 		for (BookStatus bookstt : bookstts) {
-			System.out.println(" - " + bookstt.bookInLocation.book.title + " - " + bookstt.customer.name + " - "
-					+ "Borrow date: " + bookstt.borrowDate);
+			System.out.println("Book name: " + bookstt.book.title + " - Location: " + bookstt.location.name);
+			System.out.println("Borrow date: " + bookstt.borrowDate);
+			if (bookstt.returnDate == null) {
+				System.out.println("Book is not return");
+			} else
+				System.out.println("Return date: " + bookstt.returnDate);
+			System.out.println("---------------------------------------");
 		}
-		System.out.println("--------------");
+	}
 
-		// Scanner 1 book --> show borrow/return status of the book
-		// Input any book title:
+	// Print borrow & return for each book scanned
+	public static void printBorrowReturnList(BookStatus[] bookstts, StockInLocation[] stockInLocations) {
 		Scanner searchBook = new Scanner(System.in);
 		System.out.println("Please input book title: ");
 		String inputBook = searchBook.nextLine();
-		System.out.println("Status of '" + inputBook + "' is as bellow:");
-		searchBook.close();
 
-		// Total quantity of Book
+		// stock remain
 		int totalQuantity = 0;
 		for (StockInLocation stock : stockInLocations) {
 			if (stock.book.title.equals(inputBook))
 				totalQuantity = totalQuantity + stock.quantity;
 		}
 
-		// check how many units in borrowed status
 		int borrowedQty = 0;
 		for (BookStatus bookstt : bookstts) {
-			if (bookstt.bookInLocation.book.title.equals(inputBook) && bookstt.returnDate == null) {
+			if (bookstt.book.title.equals(inputBook) && bookstt.returnDate == null) {
 				borrowedQty += 1;
 			}
 		}
 		int stockRemain = totalQuantity - borrowedQty;
-		System.out.println("- Available for borrow: " + stockRemain);
+		System.out.println("Available for borrow: " + stockRemain);
 
+		// print
 		for (BookStatus bookstt : bookstts) {
-			if (bookstt.bookInLocation.book.title.equals(inputBook)) { // k dung dc == input
-				System.out.println(" - Borrow Date: " + bookstt.borrowDate + " - by " + bookstt.customer.name
-						+ " - Return Date: " + bookstt.returnDate);
+			if (bookstt.book.title.equals(inputBook)) {
+				System.out.println("Borrowed by : " + bookstt.customer.name);
+				System.out.println("Borrow date: " + bookstt.borrowDate);
+				if (bookstt.returnDate == null) {
+					System.out.println("Book is not return");
+				} else
+					System.out.println("Return date:" + bookstt.returnDate);
+				System.out.println("---------------------------------------");
 			}
-
 		}
-
 	}
 }
