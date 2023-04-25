@@ -38,7 +38,7 @@ public class LibraryApp {
 		bookCat2.category = cookbook;
 
 		CategoryOfBook bookCat3 = new CategoryOfBook();
-		bookCat3.id = 2;
+		bookCat3.id = 3;
 		bookCat3.book = theCat;
 		bookCat3.category = children;
 
@@ -73,7 +73,7 @@ public class LibraryApp {
 		theCatInHanoi.quantity = 50;
 
 		StockInLocation theCatInHcm = new StockInLocation();
-		theCatInHcm.id = 3;
+		theCatInHcm.id = 4;
 		theCatInHcm.book = theCat;
 		theCatInHcm.location = hanoi;
 		theCatInHcm.quantity = 20;
@@ -83,19 +83,19 @@ public class LibraryApp {
 		// set customer
 		Customer yen = new Customer();
 		yen.id = 1;
-		yen.name = "pham thi yen";
+		yen.name = "Yen";
 		yen.setEmail("maiiyenpham@gmail.com");
 		yen.setTel("0377123456");
 
 		Customer hoa = new Customer();
 		hoa.id = 2;
-		hoa.name = "nguyen thieu hoa";
+		hoa.name = "Hoa";
 		hoa.setEmail("hoantt@toyota.com");
 		hoa.setTel("0987654321");
 
 		Customer hong = new Customer();
 		hong.id = 3;
-		hong.name = "nguyen thu hong";
+		hong.name = "Hong";
 		hong.setEmail("hongnt@toyota.com");
 		hong.setTel("0987123456");
 
