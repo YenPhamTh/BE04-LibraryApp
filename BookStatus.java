@@ -2,7 +2,8 @@ package Library;
 
 public class BookStatus {
 	int id;
-	StockInLocation bookInLocation;
+	Book book;
+	Location location;
 	Customer customer;
 	String borrowDate;
 	String returnDate;
